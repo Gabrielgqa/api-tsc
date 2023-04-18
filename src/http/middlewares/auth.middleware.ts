@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
-import { Request, Response, NextFunction } from 'express';
-import { RequestWithUserId } from '../types/custom';
+import { Response, NextFunction } from 'express';
+import { RequestWithUserId } from '../../types/custom';
 
 export const verifyToken = (req: RequestWithUserId, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;

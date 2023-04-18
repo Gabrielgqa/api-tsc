@@ -3,7 +3,9 @@ import cors from 'cors';
 import bodyParser from 'body-parser';
 import jwt from 'jsonwebtoken';
 import * as dotenv from 'dotenv';
-import { verifyToken } from './middlewares/auth.middleware';
+import routes from './http/routes/index';
+
+import { verifyToken } from './http/middlewares/auth.middleware';
 
 dotenv.config();
 
@@ -11,6 +13,9 @@ const app = express();
 
 app.use(cors());
 app.use(bodyParser.json());
+
+app.use(routes);
+
 
 // Rota de login
 app.post('/login', (req, res) => {
