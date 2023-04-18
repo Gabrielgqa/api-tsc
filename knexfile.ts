@@ -14,7 +14,7 @@ const config: Knex.Config = {
     port: 5432
   },
   migrations: {
-    directory: path.resolve(__dirname, 'src', 'infra', 'config', 'db', 'migrations')
+    directory: path.resolve(__dirname, 'src', 'config', 'db', 'migrations')
   },
 };
 

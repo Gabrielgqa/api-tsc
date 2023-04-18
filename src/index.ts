@@ -16,20 +16,6 @@ app.use(bodyParser.json());
 
 app.use(routes);
 
-
-// Rota de login
-app.post('/login', (req, res) => {
-  const { username, password } = req.body;
-
-  // Autenticação
-  if (username === 'meuusuario' && password === 'minhasenha') {
-    const token = jwt.sign({ id: 1 }, process.env.JWT_SECRET as string, { expiresIn: 300 });
-    res.send({ auth: true, token: token });
-  } else {
-    res.status(401).send({ message: 'Invalid credentials' });
-  }
-});
-
 // Rota protegida
 app.get('/', verifyToken, (req, res) => {
   res.send('Hello World!');

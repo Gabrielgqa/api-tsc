@@ -8,7 +8,6 @@ export default class UserController {
     async create(request: Request, response: Response) {
 
         const schema = Yup.object().shape({
-            name: Yup.string().required(),
             email: Yup.string().required(),
             password: Yup.string().required()
         });
@@ -17,11 +16,11 @@ export default class UserController {
             return response.status(400).json({ error: 'Field validation erros.' });
         }
 
-        const {name, email, password} = request.body;
+        const {email, password} = request.body;
         const pass = bcrypt.hashSync(password, 10);
         
         const userRepository = new UserRepository(conn);
-        await userRepository.create(name, email, pass);
+        await userRepository.create(email, pass);
 
         return response.status(201);
     }
@@ -47,7 +46,6 @@ export default class UserController {
     async update(request: Request, response: Response) {
 
         const schema = Yup.object().shape({
-            name: Yup.string().required(),
             email: Yup.string().required(),
             password: Yup.string().required()
         });
@@ -56,13 +54,13 @@ export default class UserController {
             return response.status(400).json({ error: 'Field validation erros.' });
         }
 
-        const {name, email, password} = request.body;
+        const { email, password } = request.body;
         const { id } = request.params;
 
         const pass = bcrypt.hashSync(password, 10);
         
         const userRepository = new UserRepository(conn);
-        const user = await userRepository.update(parseInt(id), name, email, pass);
+        const user = await userRepository.update(parseInt(id), email, pass);
 
         return response.status(201).json({ user });
     }
