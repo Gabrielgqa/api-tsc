@@ -51,18 +51,18 @@ export default class UserController {
             last_name: Yup.string().required(),
             cpf: Yup.string().required(),
             phone: Yup.string().required(),
-            user_id: Yup.number().required()
+            birth_date: Yup.date()
         });
       
         if (!(await schema.isValid(request.body))) {
             return response.status(400).json({ error: 'Field validation erros.' });
         }
 
-        const { first_name, last_name, cpf, phone, user_id, birth_date } = request.body;
+        const { first_name, last_name, cpf, phone, birth_date } = request.body;
         const { id } = request.params;
         
         const clientRepository = new ClientRepository(conn);
-        const client = await clientRepository.update(parseInt(id), first_name, last_name, cpf, phone, user_id, birth_date);
+        const client = await clientRepository.update(parseInt(id), first_name, last_name, cpf, phone, birth_date);
 
         return response.status(201).json({ client });
     }

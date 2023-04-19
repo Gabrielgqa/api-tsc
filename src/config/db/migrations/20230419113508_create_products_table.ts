@@ -7,9 +7,11 @@ export async function up(knex: Knex): Promise<void> {
         table.string('name').notNullable();
         table.string('description').notNullable();
         table.double('price').notNullable();
+        table.double('promotional_price');
         table.integer('stock').notNullable();
-        table.boolean('available').notNullable();
-        table.boolean('highlight').notNullable();
+        table.boolean('available').notNullable().defaultTo(true);
+        table.boolean('highlight').notNullable().defaultTo(false);
+        table.boolean('promotion').notNullable().defaultTo(false);
         table.timestamps(true, true);
     });
 }

@@ -20,7 +20,7 @@ export default class ProductController {
         const { name, description, price, stock } = request.body;
         
         const productRepository = new ProductRepository(conn);
-        await productRepository.create(name, description, price, stock, true, false);
+        await productRepository.create(name, description, price, stock);
 
         return response.status(201).json({ message: "Product created!" });
     }
@@ -46,23 +46,25 @@ export default class ProductController {
     async update(request: Request, response: Response) {
 
         const schema = Yup.object().shape({
-            name: Yup.string().required(),
-            description: Yup.string().required(),
-            price: Yup.number().required(),
-            stock: Yup.number().required(),
-            available: Yup.boolean().required(),
-            highlight: Yup.boolean().required()
+            name: Yup.string(),
+            description: Yup.string(),
+            price: Yup.number(),
+            stock: Yup.number(),
+            available: Yup.boolean(),
+            highlight: Yup.boolean(),
+            promotion: Yup.boolean(),
+            promotional_price: Yup.number()
         });
       
         if (!(await schema.isValid(request.body))) {
             return response.status(400).json({ error: 'Field validation erros.' });
         }
 
-        const { name, description, price, stock, available, highlight } = request.body;
+        const { name, description, price, stock, available, highlight, promotion, promotional_price } = request.body;
         const { id } = request.params;
         
         const productRepository = new ProductRepository(conn);
-        const product = await productRepository.update(parseInt(id), name, description, price, stock, available, highlight);
+        const product = await productRepository.update(parseInt(id), name, description, price, stock, available, highlight, promotion, promotional_price);
 
         return response.status(200).json({ product });
     }

@@ -3,8 +3,8 @@ import { Knex } from 'knex';
 export class UserRepository {
   constructor(private readonly knex: Knex) {}
 
-  async create(email: string, password: string, is_admin?: boolean) {
-    return await this.knex('users').insert({ email, password, is_admin });
+  async create(email: string, password: string) {
+    return await this.knex('users').insert({ email, password });
   }
 
   async findAll() {

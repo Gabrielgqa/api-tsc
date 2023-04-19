@@ -52,7 +52,8 @@ export default class AddressController {
             number: Yup.string().required(),
             district: Yup.string().required(),
             city: Yup.string().required(),
-            state: Yup.string().required()
+            state: Yup.string().required(),
+            complement: Yup.string()
         });
       
         if (!(await schema.isValid(request.body))) {

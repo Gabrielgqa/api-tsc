@@ -15,8 +15,8 @@ export class ClientRepository {
     return await this.knex('clients').where({ id }).first();
   }
 
-  async update(id: number, first_name: string, last_name: string, cpf: string, phone: string, user_id: number, birth_date?: Date) {
-    return await this.knex('clients').where({ id }).update({ first_name, last_name, cpf, phone, user_id, birth_date });
+  async update(id: number, first_name: string, last_name: string, cpf: string, phone: string, birth_date?: Date) {
+    return await this.knex('clients').where({ id }).update({ first_name, last_name, cpf, phone, birth_date });
   }
 
   async delete(id: number) {
