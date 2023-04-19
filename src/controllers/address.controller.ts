@@ -52,21 +52,20 @@ export default class AddressController {
             number: Yup.string().required(),
             district: Yup.string().required(),
             city: Yup.string().required(),
-            state: Yup.string().required(),
-            client_id: Yup.number().required()
+            state: Yup.string().required()
         });
       
         if (!(await schema.isValid(request.body))) {
             return response.status(400).json({ error: 'Field validation erros.' });
         }
 
-        const { address, number, district, city, state, client_id, complement } = request.body;
+        const { address, number, district, city, state, complement } = request.body;
         const { id } = request.params;
         
         const addressRepository = new AddressRepository(conn);
-        const adres = await addressRepository.update(parseInt(id), address, number, district, city, state, client_id, complement);
+        const adres = await addressRepository.update(parseInt(id), address, number, district, city, state, complement);
 
-        return response.status(201).json({ address: adres });
+        return response.status(200).json({ address: adres });
     }
 
     async delete(request: Request, response: Response) {
@@ -76,6 +75,6 @@ export default class AddressController {
         const addressRepository = new AddressRepository(conn);
         const adres = await addressRepository.delete(parseInt(id));
 
-        return response.json({ address: adres });
+        return response.status(200).json({ address: adres });
     }
 }
