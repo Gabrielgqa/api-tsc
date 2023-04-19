@@ -15,6 +15,10 @@ export class UserRepository {
     return await this.knex('users').where({ id }).first();
   }
 
+  async findByCredentials(email: string){
+    return await this.knex('users').where({ email }).first();
+  }
+
   async update(id: number, email: string, password: string, is_admin?: boolean) {
     return await this.knex('users').where({ id }).update({ email, password, is_admin });
   }
