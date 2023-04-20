@@ -7,6 +7,7 @@ import categoriesRouter from './categories.routes';
 import productsRouter from './products.routes';
 import productCategoriesRouter from './product_categories.routes';
 import couponsRouter from './coupons.routes';
+import ratesRouter from './rates.routes';
 
 const routes = Router();
 const authController = new AuthController();
@@ -20,5 +21,6 @@ routes.use('/categories', categoriesRouter);
 routes.use('/products', productsRouter);
 routes.use('/product-categories', productCategoriesRouter);
 routes.use('/coupons', couponsRouter);
+routes.use('/rates', ratesRouter);
 
 export default routes;
