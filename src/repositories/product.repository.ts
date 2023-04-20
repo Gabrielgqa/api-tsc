@@ -1,10 +1,12 @@
 import { Knex } from 'knex';
+import { Product } from '../entities/Product';
 
 export class ProductRepository {
   constructor(private readonly knex: Knex) {}
 
-  async create(name: string, description: string, price: number, stock: number) {
-    return await this.knex('products').insert({ name, description, price, stock });
+  async create(name: string, description: string, price: number, stock: number): Promise<Product> {
+    const produt = await this.knex('products').insert({ name, description, price, stock }).returning('*');
+    return await this.formatEntitie(produt);
   }
 
   async findAll() {
@@ -21,5 +23,15 @@ export class ProductRepository {
 
   async delete(id: number) {
     return await this.knex('products').where({ id }).del();
+  }
+
+  async formatEntitie(product: any[]): Promise<Product>  {
+    const entitieProduct = new  Product();
+    entitieProduct.id = product[0].id;
+    entitieProduct.name = product[0].id;
+    entitieProduct.price = product[0].id;
+    entitieProduct.stock = product[0].id;
+
+    return entitieProduct;
   }
 }

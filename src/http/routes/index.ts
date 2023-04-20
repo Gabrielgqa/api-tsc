@@ -5,6 +5,7 @@ import clientsRouter from './clients.routes';
 import addressesRouter from './addresses.routes';
 import categoriesRouter from './categories.routes';
 import productsRouter from './products.routes';
+import productCategoriesRouter from './product_categories.routes';
 
 const routes = Router();
 const authController = new AuthController();
@@ -16,5 +17,6 @@ routes.use('/clients', clientsRouter);
 routes.use('/addresses', addressesRouter);
 routes.use('/categories', categoriesRouter);
 routes.use('/products', productsRouter);
+routes.use('/product-categories', productCategoriesRouter);
 
 export default routes;

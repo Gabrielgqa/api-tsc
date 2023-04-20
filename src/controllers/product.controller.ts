@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import * as Yup from 'yup';
 import { ProductRepository } from '../repositories/product.repository';
+import { ProductCategoryRepository } from '../repositories/product_category.repository';
+import { Product } from '../entities/Product';
 import conn from '../config/db/index';
 
 export default class ProductController {
@@ -10,17 +12,28 @@ export default class ProductController {
             name: Yup.string().required(),
             description: Yup.string().required(),
             price: Yup.number().required(),
-            stock: Yup.number().required()
+            stock: Yup.number().required(),
+            categories_id: Yup.array().of(Yup.number()).required()
         });
       
         if (!(await schema.isValid(request.body))) {
             return response.status(400).json({ error: 'Field validation erros.' });
         }
 
-        const { name, description, price, stock } = request.body;
+        const { name, description, price, stock, categories_id } = request.body;
         
         const productRepository = new ProductRepository(conn);
-        await productRepository.create(name, description, price, stock);
+        const product: Product = await productRepository.create(name, description, price, stock);
+
+        const productCategoryRepository = new ProductCategoryRepository(conn);
+
+        for (const category_id of categories_id) {
+            const id = await productCategoryRepository.findByProductCategoryId(product.id, parseInt(category_id));
+            if(id) {
+                return;
+            }
+            await productCategoryRepository.create(product.id, category_id);
+        }
 
         return response.status(201).json({ message: "Product created!" });
     }
