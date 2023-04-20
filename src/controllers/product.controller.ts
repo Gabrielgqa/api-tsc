@@ -35,7 +35,7 @@ export default class ProductController {
             await productCategoryRepository.create(product.id, category_id);
         }
 
-        return response.status(201).json({ message: "Product created!" });
+        return response.status(201).json({ product });
     }
 
     async findAll(request: Request, response: Response) {

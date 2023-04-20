@@ -28,9 +28,9 @@ export class ProductRepository {
   async formatEntitie(product: any[]): Promise<Product>  {
     const entitieProduct = new  Product();
     entitieProduct.id = product[0].id;
-    entitieProduct.name = product[0].id;
-    entitieProduct.price = product[0].id;
-    entitieProduct.stock = product[0].id;
+    entitieProduct.name = product[0].name;
+    entitieProduct.price = product[0].price;
+    entitieProduct.stock = product[0].stock;
 
     return entitieProduct;
   }
