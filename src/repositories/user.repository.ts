@@ -1,10 +1,12 @@
 import { Knex } from 'knex';
+import { User } from '../entities/User';
 
 export class UserRepository {
   constructor(private readonly knex: Knex) {}
 
   async create(email: string, password: string) {
-    return await this.knex('users').insert({ email, password });
+    const user = await this.knex('users').insert({ email, password }).returning('*');
+    return await this.formatEntitie(user);
   }
 
   async findAll() {
@@ -25,5 +27,15 @@ export class UserRepository {
 
   async delete(id: number) {
     return await this.knex('users').where({ id }).del();
+  }
+
+  async formatEntitie(user: any[]): Promise<User>  {
+    const entitieUser = new  User();
+    entitieUser.id = user[0].id;
+    entitieUser.email = user[0].email;
+    entitieUser.password = user[0].password;
+    entitieUser.is_admin = user[0].is_admin;
+
+    return entitieUser;
   }
 }

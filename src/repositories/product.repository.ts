@@ -13,8 +13,9 @@ export class ProductRepository {
     return await this.knex('products').select('*');
   }
 
-  async findById(id: number) {
-    return await this.knex('products').where({ id }).first();
+  async findById(id: number): Promise<Product> {
+    const produt =  await this.knex('products').where({ id }).first();
+    return await this.formatEntitie(produt);
   }
 
   async update(id: number, name: string, description: string, price: number, stock: number, available: boolean, highlight: boolean, promotion: boolean, promotional_price?: number) {
