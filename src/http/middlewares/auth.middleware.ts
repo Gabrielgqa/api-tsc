@@ -1,8 +1,8 @@
 import jwt from 'jsonwebtoken';
 import { Response, NextFunction } from 'express';
-import { RequestWithUserId } from '../../types/custom';
+import { RequestPersonalized } from '../../types/custom';
 
-export const verifyToken = (req: RequestWithUserId, res: Response, next: NextFunction) => {
+export const verifyToken = (req: RequestPersonalized, res: Response, next: NextFunction) => {
   const authHeader = req.headers.authorization;
   if (!authHeader) {
     return res.status(401).send({ message: 'No token provided' });
@@ -13,7 +13,7 @@ export const verifyToken = (req: RequestWithUserId, res: Response, next: NextFun
     if (err) {
       return res.status(401).send({ message: 'Unauthorized' });
     }
-    req.userId = decoded.id;
+
     next();
   });
 }
