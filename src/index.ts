@@ -21,7 +21,8 @@ const sessionOptions: session.SessionOptions = {
 app.use(session(sessionOptions));
 
 
-app.use(cors());
+app.use(cors({ origin: '*' }));
+
 app.use(bodyParser.json());
 
 app.use(routes);

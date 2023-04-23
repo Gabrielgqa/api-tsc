@@ -24,7 +24,7 @@ export default class AuthController {
         const user = await userRepository.findByCredentials(email);
 
         if (!user || !bcrypt.compareSync(password, user.password)) {
-            return response.status(400).json({ error: 'Invalid credentials.' });
+            return response.status(401).json({ error: 'Invalid credentials.' });
         }
 
         const token = jwt.sign({ id: 1 }, process.env.JWT_SECRET as string, { expiresIn: 300 });
